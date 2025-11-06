@@ -1,0 +1,48 @@
+<?php
+
+echo "==============================\n";
+echo "  JOGO DE ADIVINHAÇÃO  \n";
+echo "==============================\n\n";
+
+$totalRodadas = (int) readline("Quantas rodadas você quer jogar? ");
+$pontuacao = 0;
+
+for ($rodada = 1; $rodada <= $totalRodadas; $rodada++) {
+
+    echo "\n--- Rodada $rodada de $totalRodadas ---\n";
+    $sorteado = rand(1, 100);
+    $tentativas = 0;
+
+    while (true) {
+        $chute = (int) readline("Digite um número entre 1 e 100: ");
+        $tentativas++;
+
+        if ($chute == $sorteado) {
+            echo "✅ Você acertou! O número era $sorteado.\n";
+            // Quanto menos tentativas, mais pontos
+            $pontosRodada = max(0, 100 - ($tentativas - 1) * 10);
+            $pontuacao += $pontosRodada;
+            echo "Você fez $pontosRodada pontos nesta rodada!\n";
+            break;
+        } elseif ($chute > $sorteado) {
+            echo "📉 Muito alto! Tente um número menor.\n";
+        } else {
+            echo "📈 Muito baixo! Tente um número maior.\n";
+        }
+    }
+}
+
+echo "\n==============================\n";
+echo "🏁 FIM DO JOGO!\n";
+echo "Sua pontuação total: $pontuacao pontos.\n";
+echo "==============================\n";
+
+if ($pontuacao >= ($totalRodadas * 70)) {
+    echo "Parabéns! Você é um mestre da adivinhação!\n";
+} elseif ($pontuacao >= ($totalRodadas * 40)) {
+    echo "Bom desempenho! Continue praticando.\n";
+} else {
+    echo "Foi por pouco... tente novamente!\n";
+}
+
+?>
