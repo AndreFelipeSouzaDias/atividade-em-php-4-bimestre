@@ -19,7 +19,6 @@ for ($rodada = 1; $rodada <= $totalRodadas; $rodada++) {
 
         if ($chute == $sorteado) {
             echo "✅ Você acertou! O número era $sorteado.\n";
-            // Quanto menos tentativas, mais pontos
             $pontosRodada = max(0, 100 - ($tentativas - 1) * 10);
             $pontuacao += $pontosRodada;
             echo "Você fez $pontosRodada pontos nesta rodada!\n";
