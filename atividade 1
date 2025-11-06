@@ -1,0 +1,58 @@
+<?php
+
+function calcularSono($horaDormir, $horaAcordar, $sonoIdeal = 8) {
+    $inicio = strtotime($horaDormir);
+    $fim = strtotime($horaAcordar);
+
+    if ($fim <= $inicio) {
+        $fim = strtotime($horaAcordar . " +1 day");
+    }
+
+    $minutosSono = ($fim - $inicio) / 60;
+    $horasSono = floor($minutosSono / 60);
+    $minutosRestantes = $minutosSono % 60;
+    $ciclos = floor($minutosSono / 90);
+
+    if ($minutosSono < 240) {
+        $nivel = "☠️ Nível Zumbi — Vai precisar de muito café! ☠️";
+    } elseif ($minutosSono < 360) {
+        $nivel = "Sono curto — Vai acordar meio grogue...";
+    } elseif ($minutosSono < 480) {
+        $nivel = "Sono bom — Quase no ponto ideal!";
+    } else {
+        $nivel = "Mestre dos Sonhos — Sono perfeito!";
+    }
+
+    $mensagem = sprintf(
+        "\nVocê vai dormir por %dh %02dmin, completando %d ciclos de sono.\n%s\n",
+        $horasSono,
+        $minutosRestantes,
+        $ciclos,
+        $nivel
+    );
+
+    return $mensagem;
+}
+
+echo "=============================\n";
+echo "        💤 DORMILÔMETRO       \n";
+echo "=============================\n\n";
+
+echo "Que horas você vai dormir? (formato 24h, ex: 23:30): ";
+$horaDormir = trim(fgets(STDIN));
+
+echo "Que horas você vai acordar? (formato 24h, ex: 07:00): ";
+$horaAcordar = trim(fgets(STDIN));
+
+echo "Quantas horas de sono ideal você gostaria? (padrão 8h): ";
+$sonoIdeal = trim(fgets(STDIN));
+if ($sonoIdeal === "" || !is_numeric($sonoIdeal)) {
+    $sonoIdeal = 8;
+}
+
+$resultado = calcularSono($horaDormir, $horaAcordar, $sonoIdeal);
+
+echo "\n--------------------------------------\n";
+echo $resultado;
+echo "--------------------------------------\n";
+?>
